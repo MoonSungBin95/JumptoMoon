@@ -80,3 +80,5 @@ public class Reservation_Arr {
 		
 	}
 }
+
+//연습용 테스트 추가
