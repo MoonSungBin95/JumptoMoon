@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.PD_BOM;
+import com.example.demo.Entity.PD_QC;
 import com.example.demo.Entity.PD_RS;
 import com.example.demo.Entity.PD_WO;
 import com.example.demo.Entity.PD_WorkHistory;
 import com.example.demo.Form.PD_BOMCreateForm;
+import com.example.demo.Form.PD_QCCreateForm;
 import com.example.demo.Form.PD_WOCreateForm;
 import com.example.demo.Service.PD_BOMService;
+import com.example.demo.Service.PD_QCService;
 import com.example.demo.Service.PD_RSService;
 import com.example.demo.Service.PD_WOService;
 import com.example.demo.Service.PD_WorkHistoryService;
@@ -33,6 +36,7 @@ public class PD_Controller {
 	private final PD_WOService woservice;
 	private final PD_WorkHistoryService whservice;
 	private final PD_RSService rsservice;
+	private final PD_QCService qcservice;
 	// --------------------- PD_BOM -------------------------------//
 	@GetMapping("/bom")
 	public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
@@ -106,18 +110,44 @@ public class PD_Controller {
 	
 	// -------------------- PD_RS ----------------------------------//
 	
-	@GetMapping("/wh")
+	@GetMapping("/rs")
 	public String RS_list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
 		String currentUrl = request.getRequestURI();
 		model.addAttribute("currentUrl", currentUrl);
 		
 		Page<PD_RS> paging = rsservice.getList(page);
 		model.addAttribute("paging",paging);
-		return "pd/PD_WorkHistory";
+		return "pd/PD_RS";
 	}
 	
 	// -------------------- PD_QC ----------------------------------//
 	
+	@GetMapping("/qc")
+	public String QC_list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
+		String currentUrl = request.getRequestURI();
+		model.addAttribute("currentUrl", currentUrl);
+		
+		Page<PD_QC> paging = qcservice.getList(page);
+		model.addAttribute("paging",paging);
+		return "pd/PD_QC";
+	}
+	
+	@GetMapping("/qc/regi")
+	public String QC_regi(PD_QCCreateForm qccreateform) {
+		return "pd/PD_QCregi";
+	}
+	
+	@PostMapping("/qc/regi")
+	public String QC_regi(@Valid PD_QCCreateForm qccreateform, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "pd/PD_QCregi";
+		}
+		
+		qcservice.create(qccreateform.getId(), qccreateform.getQcTool(), qccreateform.
+				getProdCode(), qccreateform.getProdNum(), qccreateform.getQcNum(), 
+				qccreateform.getQcList(), qccreateform.getPF());
+		return "redirect:/PD/qc";
+	}
 	// -------------------- PD_Cost ----------------------------------//
 }
 
