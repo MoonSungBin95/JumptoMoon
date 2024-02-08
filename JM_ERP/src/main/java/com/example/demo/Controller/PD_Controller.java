@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.PD_BOM;
+import com.example.demo.Entity.PD_RS;
 import com.example.demo.Entity.PD_WO;
 import com.example.demo.Entity.PD_WorkHistory;
 import com.example.demo.Form.PD_BOMCreateForm;
 import com.example.demo.Form.PD_WOCreateForm;
 import com.example.demo.Service.PD_BOMService;
+import com.example.demo.Service.PD_RSService;
 import com.example.demo.Service.PD_WOService;
 import com.example.demo.Service.PD_WorkHistoryService;
 
@@ -30,6 +32,7 @@ public class PD_Controller {
 	private final PD_BOMService bomservice;
 	private final PD_WOService woservice;
 	private final PD_WorkHistoryService whservice;
+	private final PD_RSService rsservice;
 	// --------------------- PD_BOM -------------------------------//
 	@GetMapping("/bom")
 	public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
@@ -101,8 +104,17 @@ public class PD_Controller {
 		return "pd/PD_WorkHistory";
 	}
 	
-	
 	// -------------------- PD_RS ----------------------------------//
+	
+	@GetMapping("/wh")
+	public String RS_list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
+		String currentUrl = request.getRequestURI();
+		model.addAttribute("currentUrl", currentUrl);
+		
+		Page<PD_RS> paging = rsservice.getList(page);
+		model.addAttribute("paging",paging);
+		return "pd/PD_WorkHistory";
+	}
 	
 	// -------------------- PD_QC ----------------------------------//
 	
