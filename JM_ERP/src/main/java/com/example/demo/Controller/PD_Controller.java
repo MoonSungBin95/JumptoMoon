@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.PD_BOM;
+import com.example.demo.Entity.PD_Cost;
 import com.example.demo.Entity.PD_QC;
 import com.example.demo.Entity.PD_RS;
 import com.example.demo.Entity.PD_WO;
 import com.example.demo.Entity.PD_WorkHistory;
 import com.example.demo.Form.PD_BOMCreateForm;
+import com.example.demo.Form.PD_CostCreateForm;
 import com.example.demo.Form.PD_QCCreateForm;
 import com.example.demo.Form.PD_WOCreateForm;
 import com.example.demo.Service.PD_BOMService;
+import com.example.demo.Service.PD_CostService;
 import com.example.demo.Service.PD_QCService;
 import com.example.demo.Service.PD_RSService;
 import com.example.demo.Service.PD_WOService;
@@ -37,6 +40,7 @@ public class PD_Controller {
 	private final PD_WorkHistoryService whservice;
 	private final PD_RSService rsservice;
 	private final PD_QCService qcservice;
+	private final PD_CostService costservice;
 	// --------------------- PD_BOM -------------------------------//
 	@GetMapping("/bom")
 	public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
@@ -149,5 +153,31 @@ public class PD_Controller {
 		return "redirect:/PD/qc";
 	}
 	// -------------------- PD_Cost ----------------------------------//
+	
+	@GetMapping("/cost")
+	public String Cost_list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
+		String currentUrl = request.getRequestURI();
+		model.addAttribute("currentUrl", currentUrl);
+		
+		Page<PD_Cost> paging = costservice.getList(page);
+		model.addAttribute("paging",paging);
+		return "pd/PD_Cost";
+	}
+	
+	@GetMapping("/cost/regi")
+	public String Cost_regi(PD_CostCreateForm costcreateform) {
+		return "pd/PD_Costregi";
+	}
+	
+	@PostMapping("/cost/regi")
+	public String Cost_regi(@Valid PD_CostCreateForm costcreateform, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "pd/PD_Costregi";
+		}
+		
+		costservice.create(costcreateform.getPd_bom(), costcreateform.getProdName(), 
+				costcreateform.getKg(), costcreateform.getCost());
+		return "redirect:/PD/cost";
+	}
 }
 
