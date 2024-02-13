@@ -11990,3 +11990,8 @@ th {
 .modal:invalid {
 	display: none;
 }
+
+.main-contents {
+	display: flex;
+	align-items: flex-start;
+}
