@@ -185,7 +185,7 @@
 				    </table>
                     <!-- 데이터 테이블 끝-->
 	                <!-- 페이징 프라그먼트 -->
-					<div th:replace="~{/paging::pagingFragment(paging=${bonds})}"></div>
+					<div th:replace="~{ac/AC_paging::AC_pagingFragment(paging=${bonds})}"></div>
 					<!-- 버튼 프라그먼트 -->
 					<div th:replace="~{ac/AC_bond_debt_botton::bottonFragment}"></div>
                 </div> <!-- 옵션 1일 때 리스트 -->
@@ -228,7 +228,7 @@
 				    </table>
                     <!-- 데이터 테이블 끝-->
                    	<!-- 페이징 프라그먼트 -->
-					<div th:replace="~{/paging::pagingFragment(paging=${debts})}"></div>
+					<div th:replace="~{ac/AC_paging::AC_pagingFragment(paging=${debts})}"></div>
 					<!-- 버튼 프라그먼트 -->
 					<div th:replace="~{ac/AC_bond_debt_botton::bottonFragment}"></div>
                 </div> <!-- 옵션 2일 때 리스트 -->
@@ -242,7 +242,6 @@
 	<script>
 	    $(document).ready(function () {
 	        var selectedOption = localStorage.getItem('selectedOption') || "option1";
-	        var currentPage = localStorage.getItem('currentPage') || 1;
 	
 	        if (selectedOption === "option1") {
 	            $("#option1Content").show();
@@ -267,7 +266,7 @@
 	        });
 	    });
 	</script>
-	
+
 	<script>
         // 수정 버튼 클릭 시 모달 열기
 	    $(document).on('click', '.open-bond-modal', function() {
@@ -364,19 +363,19 @@
 	
 	<script>
 		$('#submitBondUpdate').click(function() {
-	    // 폼 안에 있는 입력 요소들의 값을 가져옴
-	    var priceField = $('#bondPriceField').val();
-	    var amount = $('#bondAmount').val();
-	    var maturityDate = $('#bondMaturityDate').val();
-	    
-	    // 증감 구분, 만기일자가 null 값이고, 변제 금액이 0인 경우 폼 제출을 막음
-	    if (priceField === '0' && !maturityDate && amount === '0') {
-	        event.preventDefault(); // 폼 제출 막기
-	        alert('하나 이상의 변경값을 입력해 주세요.'); // 사용자에게 알림
-	    } else {
-	        $('#bondForm').submit(); // 조건이 충족되면 폼 제출
-	    }
-	});
+		    // 폼 안에 있는 입력 요소들의 값을 가져옴
+		    var priceField = $('#bondPriceField').val();
+		    var amount = $('#bondAmount').val();
+		    var maturityDate = $('#bondMaturityDate').val();
+		    
+		    // 증감 구분, 만기일자가 null 값이고, 변제 금액이 0인 경우 폼 제출을 막음
+		    if (priceField === '0' && !maturityDate && amount === '0') {
+		        event.preventDefault(); // 폼 제출 막기
+		        alert('하나 이상의 변경값을 입력해 주세요.'); // 사용자에게 알림
+		    } else {
+		        $('#bondForm').submit(); // 조건이 충족되면 폼 제출
+		    }
+		});
 	</script>
 	
 	<script>
