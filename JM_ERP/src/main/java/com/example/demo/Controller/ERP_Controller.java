@@ -2,13 +2,17 @@ package com.example.demo.Controller;
 
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Entity.ERP_boardQ;
 import com.example.demo.Entity.ERP_userMailBox;
+import com.example.demo.Form.ERP_boardQForm;
 import com.example.demo.Form.ERP_sendMailForm;
 import com.example.demo.Service.ERP_UserService;
 import com.example.demo.security.ERP_signUpForm;
@@ -31,7 +37,7 @@ public class ERP_Controller {
 
 	@Autowired
 	private final ERP_UserService erp_UserService;
-
+	
 	@GetMapping("/signup")
 	public String signupForm(Model model) {
 		model.addAttribute("signupForm", new ERP_signUpForm());
@@ -119,8 +125,48 @@ public class ERP_Controller {
 		return "datatable";
 	}
 	
-
-
+//	================  board control ==============
+	
+	@GetMapping("/board/Qcreate")
+	public String questionCreate(ERP_boardQForm questionform) {
+		return "board_Qform";
+	}
+	
+	@PostMapping("/board/Qcreate")
+	public String questionCreate(@Valid ERP_boardQForm questionform, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return"board_Qform";
+		}
+		this.erp_UserService.createQuestion(questionform.getSubject(), questionform.getContent());
+		
+		return "redirect:/user/board/Qlist";
+	}
+	
+	@GetMapping("/board/Qlist")
+	public String questionlist(Model model) {
+		List<ERP_boardQ> questionList = this.erp_UserService.QuestionGetList();
+		
+		model.addAttribute("questionlist", questionList);
+		return "board_list";
+	}
+	
+	@GetMapping(value ="/board/Qdetail/{id}")
+	public String questiondetail(Model model, @PathVariable("id") Integer id) {
+		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		model.addAttribute("question", question);
+		return "board_detail";
+	}
+	
+	@PostMapping("/board/Acreate/{id}")
+	public String createAnswer(Model model, @PathVariable("id") Integer id,
+			@RequestParam(value="content") String content) {
+		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		this.erp_UserService.createAnswer(question, content);
+		return String.format("redirect:/user/board/Qdetail/%s", id);
+	}
+	
+	
+	
 }
 
 
