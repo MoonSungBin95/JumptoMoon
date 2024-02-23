@@ -128,8 +128,9 @@ public class ERP_UserService {
 	
 //	================= board Method =======================
 	
-	public List<ERP_boardQ> QuestionGetList(){
-		return this.questionrepository.findAll();
+	public Page<ERP_boardQ> QuestionGetList(int page){
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.questionrepository.findAll(pageable);
 	}
 	
 	public ERP_boardQ getQuestion(Integer id) {

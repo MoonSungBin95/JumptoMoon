@@ -3,8 +3,8 @@
  <!-- 페이징 처리 -->
 <div th:fragment ="pagingFragment" th:if="${paging.totalPages > 1}">
   <!-- 이전 페이지 링크 -->
-  <ul class="pagination pagination-lg justify-content-center" th:classappend="${paging.isFirst() ? 'disabled' : ''}">
-    <li class="page-item disabled">
+  <ul class="pagination pagination-lg justify-content-center" th:classappend="${paging. ? 'disabled' : ''}">
+    <li class="page-item">
       <a class="page-link" th:href="@{${currentUrl}(page=${paging.number - 1})}">&laquo;</a>
     </li>
     

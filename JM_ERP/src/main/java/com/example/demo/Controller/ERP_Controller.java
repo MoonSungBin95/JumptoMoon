@@ -2,7 +2,6 @@ package com.example.demo.Controller;
 
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.ERP_boardQ;
 import com.example.demo.Entity.ERP_userMailBox;
+import com.example.demo.Form.ERP_boardAForm;
 import com.example.demo.Form.ERP_boardQForm;
 import com.example.demo.Form.ERP_sendMailForm;
 import com.example.demo.Service.ERP_UserService;
@@ -143,9 +143,8 @@ public class ERP_Controller {
 	}
 	
 	@GetMapping("/board/Qlist")
-	public String questionlist(Model model) {
-		List<ERP_boardQ> questionList = this.erp_UserService.QuestionGetList();
-		
+	public String questionlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+		Page<ERP_boardQ> questionList = this.erp_UserService.QuestionGetList(page);
 		model.addAttribute("questionlist", questionList);
 		return "board_list";
 	}
@@ -159,9 +158,13 @@ public class ERP_Controller {
 	
 	@PostMapping("/board/Acreate/{id}")
 	public String createAnswer(Model model, @PathVariable("id") Integer id,
-			@RequestParam(value="content") String content) {
+			@Valid ERP_boardAForm answerform, BindingResult bindingResult) {
 		ERP_boardQ question = this.erp_UserService.getQuestion(id);
-		this.erp_UserService.createAnswer(question, content);
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("question", question);
+			return "board_detail";
+		}
+		this.erp_UserService.createAnswer(question, answerform.getContent());
 		return String.format("redirect:/user/board/Qdetail/%s", id);
 	}
 	
