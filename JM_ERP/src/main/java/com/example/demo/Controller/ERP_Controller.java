@@ -145,7 +145,7 @@ public class ERP_Controller {
 	@GetMapping("/board/Qlist")
 	public String questionlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 		Page<ERP_boardQ> questionList = this.erp_UserService.QuestionGetList(page);
-		model.addAttribute("questionlist", questionList);
+		model.addAttribute("questionlist", questionList);  
 		return "board_list";
 	}
 	
