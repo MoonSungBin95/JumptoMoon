@@ -24,7 +24,7 @@ public class MainController {
 	
 	private final PD_BOMService bomservice;
 	private final AC_SaleSlipService saleSlipService;
-	private final AC_DepositSlipService purchaseSlipService;
+	private final AC_DepositSlipService depositSlipService;
 	private final SD_productService productService;
 	
 	@GetMapping("/")
@@ -34,7 +34,7 @@ public class MainController {
     	
     	Page<PD_BOM> bomlist = bomservice.getList(page);
     	Page<AC_SaleSlip> sale = this.saleSlipService.getList(page);
-    	Page<AC_DepositSlip> purchase = this.purchaseSlipService.getList(page);
+    	Page<AC_DepositSlip> purchase = this.depositSlipService.getList(page);
     	Page<SD_Product> paging = productService.searchAllproduct(page);
     	
         model.addAttribute("bomlist", bomlist);
