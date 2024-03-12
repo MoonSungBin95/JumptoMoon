@@ -20,12 +20,12 @@ public class MGPC_RestController {
 	private PC_PurchaseService purchaseservice;
 
 	@GetMapping("/ordersheetupdate")
-	public ResponseEntity<PC_PurchaseInquiry> showUpdateForm(@RequestParam(name = "orderNumber") Long orderNumber) {
+	public ResponseEntity<PC_OrderSheet> showUpdateForm(@RequestParam(name = "orderNumber") Long orderNumber) {
 	    Optional<PC_OrderSheet> orderOp = purchaseservice.orderSheetfindId(orderNumber);
 	    Optional<PC_PurchaseInquiry> purchaseInquiry = purchaseservice.findpurchase(orderNumber);
 	    
-	    if (purchaseInquiry.isPresent()) {
-	        return ResponseEntity.ok(purchaseInquiry.get());
+	    if (orderOp.isPresent()) {
+	        return ResponseEntity.ok(orderOp.get());
 	    } else {
 	        return ResponseEntity.notFound().build();
 	    }
