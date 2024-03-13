@@ -506,6 +506,7 @@ button:not(:disabled),
 [type=reset]:not(:disabled),
 [type=submit]:not(:disabled) {
   cursor: pointer;
+  color: black;
 }
 
 ::-moz-focus-inner {
@@ -3768,18 +3769,22 @@ textarea.form-control-lg {
 .btn-group > :not(.btn-check:first-child) + .btn,
 .btn-group > .btn-group:not(:first-child) {
   margin-left: calc(var(--bs-border-width) * -1);
+  width: 95.63px;
+  color: blue;
 }
 .btn-group > .btn:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn.dropdown-toggle-split:first-child,
 .btn-group > .btn-group:not(:last-child) > .btn {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  color: blue;
 }
 .btn-group > .btn:nth-child(n+3),
 .btn-group > :not(.btn-check) + .btn,
 .btn-group > .btn-group:not(:first-child) > .btn {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  width: 60px;
 }
 
 .dropdown-toggle-split {
@@ -12132,7 +12137,8 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  background-image: linear-gradient(#326393, #326393 60%, #326393);
+  /*background-image: linear-gradient(#326393, #326393 60%, #326393);*/
+  background-color: skyblue;
 }
 
 .btn-secondary {
@@ -12144,7 +12150,11 @@ textarea.form-control-lg {
 }
 
 .btn-info {
-  background-image: linear-gradient(#326393, #333F50 60%, #333F50);
+  /*background-image: linear-gradient(#326393, #333F50 60%, #333F50);*/
+}
+
+.btn-info0 {
+	
 }
 
 .btn-warning {
