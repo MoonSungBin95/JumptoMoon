@@ -1,4 +1,7 @@
 package com.example.demo.Controller;
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Entity.Mg_AccountMG_Entity;
+import com.example.demo.Entity.PC_PurchaseInquiry;
 import com.example.demo.Entity.PD_BOM;
 import com.example.demo.Entity.PD_Cost;
 import com.example.demo.Entity.PD_QC;
@@ -20,6 +25,8 @@ import com.example.demo.Form.PD_BOMCreateForm;
 import com.example.demo.Form.PD_CostCreateForm;
 import com.example.demo.Form.PD_QCCreateForm;
 import com.example.demo.Form.PD_WOCreateForm;
+import com.example.demo.Service.MG_acoountService;
+import com.example.demo.Service.PC_PurchaseService;
 import com.example.demo.Service.PD_BOMService;
 import com.example.demo.Service.PD_CostService;
 import com.example.demo.Service.PD_QCService;
@@ -41,6 +48,9 @@ public class PD_Controller {
 	private final PD_RSService rsservice;
 	private final PD_QCService qcservice;
 	private final PD_CostService costservice;
+	private final PC_PurchaseService purchaseservice;
+	private MG_acoountService accountMg;
+	
 	// --------------------- PD_BOM -------------------------------//
 	@GetMapping("/bom")
 	public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpServletRequest request) {
@@ -122,6 +132,42 @@ public class PD_Controller {
 		Page<PD_RS> paging = rsservice.getList(page);
 		model.addAttribute("paging",paging);
 		return "pd/PD_RS";
+	}
+	
+	@GetMapping("/rs/pcinquiry")
+	public String searchPurchaseInquiry(Model model, @RequestParam(value="page",defaultValue ="0") int page,HttpServletRequest request) {
+		String currentUrl = request.getRequestURI();
+		model.addAttribute("currentUrl", currentUrl);
+		
+		Page<PC_PurchaseInquiry> paging = purchaseservice.searchPurchaseInquiry(page);
+		model.addAttribute("paging", paging);
+		return "PD/PD_PurchaseInquiry_list";
+	}
+	
+	@GetMapping("/rs/pcinquiry/create")
+	public String purchaseCreateUrl(Model model) {
+		List<Mg_AccountMG_Entity> account = accountMg.accountManager();
+		List<PD_Cost> costList =  costservice.getList();
+		
+		model.addAttribute("account",account);
+		model.addAttribute("costList",costList);
+		return "PD/PD_PurchaseInquiry_create";
+	}
+		
+	@PostMapping("/rs/pcinquiry/create")
+	public String purchaseCreateform(
+		@RequestParam(value="clientName") String clientName,
+		@RequestParam(value="itemName") String itemName,
+		@RequestParam(value="PurchaseDate") LocalDate PurchaseDate,
+		@RequestParam(value="totalCount") Double totalCount,
+		@RequestParam(value="warehouseName") String warehouseName)
+		 {
+	
+		String acceptance = "아니요";
+		
+		purchaseservice.purchaseSave( PurchaseDate,  clientName,  itemName , totalCount,  warehouseName,acceptance);
+		
+		return "redirect:/PD/rs/purchaseinquiry";
 	}
 	
 	// -------------------- PD_QC ----------------------------------//
