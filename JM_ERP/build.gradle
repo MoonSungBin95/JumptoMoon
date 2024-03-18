@@ -24,9 +24,9 @@ repositories {
 dependencies {
 
 	// Spring web
+	
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
-	compileOnly 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// Dev tools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -39,16 +39,27 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	// Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	// JUnit
 	testImplementation 'org.junit.jupiter:junit-jupiter' 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     //Springsecurity6
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+ 	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	// Spring Boot Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	
+	
+	implementation 'org.apache.poi:poi-ooxml:5.2.2'
+	
 
 }
+compileJava {
+    options.compilerArgs += ['-parameters']
+    sourceCompatibility = '17' // Java 버전에 맞게 설정
+    targetCompatibility = '17'
+}
+
 
 def webappDir = "$projectDir/src/main/my-app"
 

@@ -10,13 +10,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Entity.ERP_approval;
+import com.example.demo.Entity.ERP_boardA;
+import com.example.demo.Entity.ERP_boardQ;
 import com.example.demo.Entity.ERP_user;
 import com.example.demo.Entity.ERP_userMailBox;
 import com.example.demo.Entity.HR_mem;
+import com.example.demo.Repository.ERP_approvalRepository;
+import com.example.demo.Repository.ERP_boardARepository;
+import com.example.demo.Repository.ERP_boardQRepository;
 import com.example.demo.Repository.ERP_userMailBoxRepository;
 import com.example.demo.Repository.ERP_userRepository;
 import com.example.demo.Repository.HR_memRepository;
 
+import error.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,7 +34,15 @@ public class ERP_UserService {
 	private final HR_memRepository hr_memRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final ERP_userMailBoxRepository erp_userMailBoxRepository;
-
+	private final ERP_boardQRepository questionrepository;
+	private final ERP_boardARepository answerrepository;
+	private final ERP_approvalRepository approvalrepository;
+	
+	public Optional<ERP_user> getName(String userid) {
+		Optional<ERP_user> user = erp_userRepository.findByUserId(userid);
+		return user;
+	}
+	
 	public boolean createuser(String userId, String password, String name, String employeeId) throws Exception {
 
 		ERP_user user = new ERP_user();
@@ -64,8 +79,8 @@ public class ERP_UserService {
 			mail.setMediaFile(mediaFile);
 			mail.setSubject(subject);
 
-			Optional<ERP_user> user = erp_userRepository.findByuserId(sendUser);
-			Optional<ERP_user> user2 = erp_userRepository.findByuserId(reciveUser);
+			Optional<ERP_user> user = erp_userRepository.findByUserId(sendUser);
+			Optional<ERP_user> user2 = erp_userRepository.findByUserId(reciveUser);
 
 			if (user.isPresent()) {
 				ERP_user sendU = user.get();
@@ -110,11 +125,69 @@ public class ERP_UserService {
 		return erp_userMailBoxRepository.findById(num);
 
 	}
+	
 
 	public void checkmailstatus(Long num) {
 		Optional<ERP_userMailBox> a = erp_userMailBoxRepository.findById(num);
 		ERP_userMailBox mail = a.get();
 		mail.setCheckStatus(true);
 		erp_userMailBoxRepository.save(mail);
+	}
+	
+//	================= board Method =======================
+	
+	public Page<ERP_boardQ> QuestionGetList(int page){
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.questionrepository.findAll(pageable);
+	}
+	
+	public ERP_boardQ getQuestion(Integer id) {
+		Optional<ERP_boardQ> question = this.questionrepository.findById(id);
+		if (question.isPresent()) {
+			return question.get();
+		} else {
+			throw new DataNotFoundException("question not found");
+		}
+	}
+	
+	public void createAnswer(ERP_boardQ question, String content) {
+		ERP_boardA answer = new ERP_boardA();
+		answer.setContent(content);
+		answer.setCreateDate(LocalDateTime.now());
+		answer.setQuestion(question);
+		this.answerrepository.save(answer);
+	}	
+	
+	public void createQuestion(String subject, String content) {
+		ERP_boardQ q = new ERP_boardQ();
+		q.setSubject(subject);
+		q.setContent(content);
+		q.setCreateDate(LocalDateTime.now());
+		this.questionrepository.save(q);
+	}
+	
+//================= approval Method =======================
+
+	public Page<ERP_approval> approvalList(int page){
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.approvalrepository.findAll(pageable);
+	}
+	
+	public ERP_approval getApproval(Integer id) {
+		Optional<ERP_approval> approval = this.approvalrepository.findById(id);
+		if (approval.isPresent()) {
+			return approval.get();
+		} else {
+			throw new DataNotFoundException("question not found");
+		}
+	}
+	
+	public void createApproval(String subject, String content) {
+		ERP_approval a = new ERP_approval();
+		a.setSubject(subject);
+		a.setContent(content);
+		a.setCreateDate(LocalDateTime.now());
+		a.setDewDate(LocalDateTime.now().plusDays(3));
+		this.approvalrepository.save(a);
 	}
 }

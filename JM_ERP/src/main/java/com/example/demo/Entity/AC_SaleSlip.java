@@ -3,6 +3,7 @@ package com.example.demo.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,13 +21,16 @@ public class AC_SaleSlip {
 
     private LocalDate tradeDate; // 거래일자
     private String trader; // 거래처
+    
+    private String productCode; // 판매 상품코드
+    
+    private String seller; // 판매자
+    
+    @Column(columnDefinition = "TEXT")
     private String description; // 적요
-    private Double amount; // 금액
-    private Double VAT; // 부가세
-    private String cardNum; // 카드번호
-    private String cardName; // 카드명
+    
+    private int amount; // 금액
     private String transactionType; // 거래유형
 
     private LocalDateTime createdAt; // 생성일자
-    private LocalDateTime updatedAt; // 수정일자
 }
