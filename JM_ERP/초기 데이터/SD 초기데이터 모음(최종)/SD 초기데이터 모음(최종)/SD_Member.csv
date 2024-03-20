@@ -1,0 +1,21 @@
+memberId,memberAddress,memberCardNumber,memberEmail,memberJoinDate,memberName,memberPhoneNumber
+choihaeun456,대구시 중구,118-8816-4816,haeun.choi@example.com,2020-04-01,최하은,1012345681
+choiseowoo789,대구시 수성구,499-3145-1794,seowoo.choi@example.com,2021-05-01,최서우,1012345694
+hwangseoah123,전라남도 여수시,496-8313-4846,seoah.hwang@example.com,2020-11-01,황서아,1012345688
+junghajin890,인천시 부평구,393-8890-6519,hajin.jung@example.com,2021-06-01,정하진,1012345695
+jungjiho567,인천시 연수구,989-4024-3564,jiho.jung@example.com,2020-05-01,정지호,1012345682
+kangjia901,광주시 남구,897-7580-1220,jia.kang@example.com,2021-07-01,강지아,1012345696
+kangsoyul678,광주시 서구,604-1325-7579,soyul.kang@example.com,2020-06-01,강소율,1012345683
+kimminjun123,서울시 강남구,326-6430-8907,minjun.kim@example.com,2020-01-01,김민준,1012345678
+kimtaewoo456,서울시 강서구,667-9801-5998,taewoo.kim@example.com,2021-02-01,김태우,1012345691
+kwonhayul345,제주도 제주시,401-4344-4672,hayul.kwon@example.com,2021-01-01,권하율,1012345690
+leejian567,서울시 동대문구,440-9325-8184,jian.lee@example.com,2021-03-01,이지안,1012345692
+leeseoyeon234,서울시 서초구,338-3064-9348,seoyeon.lee@example.com,2020-02-01,이서연,1012345679
+limyuna890,울산시 남구,589-3176-5724,yuna.lim@example.com,2020-08-01,임유나,1012345685
+nohjunhyuk012,충청북도 청주시,552-1199-3545,junhyuk.noh@example.com,2020-10-01,노준혁,1012345687
+ohsiwoo234,경상북도 포항시,832-8847-7656,siwoo.oh@example.com,2020-12-01,오시우,1012345689
+parkdoyun345,부산시 해운대구,857-7882-7770,doyun.park@example.com,2020-03-01,박도윤,1012345680
+parkyejun678,부산시 사하구,247-2596-5623,yejun.park@example.com,2021-04-01,박예준,1012345693
+sonminseo901,경기도 수원시,354-2077-6032,minseo.son@example.com,2020-09-01,손민서,1012345686
+yoondoyun012,대전시 서구,834-2467-5017,doyun.yoon@example.com,2021-08-01,윤도윤,1012345697
+yoonhajun789,대전시 동구,996-1567-2673,hajun.yoon@example.com,2020-07-01,윤하준,1012345684

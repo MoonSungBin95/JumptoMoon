@@ -1,0 +1,5 @@
+파일 import 순서
+
+1) Member, Seller
+2) purchase
+3) NB, PB

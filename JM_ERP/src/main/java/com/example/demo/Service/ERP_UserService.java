@@ -159,24 +159,34 @@ public class ERP_UserService {
 		}
 	}
 	
-	public void createAnswer(ERP_boardQ question, String content, ERP_user erp_user) {
+	public void createAnswer(ERP_boardQ question, String content, HR_mem mem) {
 		ERP_boardA answer = new ERP_boardA();
 		answer.setContent(content);
 		answer.setCreateDate(LocalDateTime.now());
 		answer.setQuestion(question);
-		answer.setErp_user(erp_user);
+		answer.setMem(mem);
 		this.answerrepository.save(answer);
 	}	
 	
-	public void createQuestion(String subject, String content, ERP_user erp_user) {
+	public void createQuestion(String subject, String content, HR_mem mem) {
 		ERP_boardQ q = new ERP_boardQ();
 		q.setSubject(subject);
 		q.setContent(content);
 		q.setCreateDate(LocalDateTime.now());
-		q.setErp_user(erp_user);
+		q.setMem(mem);
 		this.questionrepository.save(q);
 	}
 	
+	public void questionModify(ERP_boardQ question, String subject, String content) {
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setModifyDate(LocalDateTime.now());
+		this.questionrepository.save(question);
+	}
+	
+	public void questionDelete(ERP_boardQ question) {
+		this.questionrepository.delete(question);
+	}
 //================= approval Method =======================
 
 	public Page<ERP_approval> approvalList(int page){

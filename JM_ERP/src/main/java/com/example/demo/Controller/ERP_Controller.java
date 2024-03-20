@@ -26,11 +26,13 @@ import com.example.demo.Entity.ERP_approval;
 import com.example.demo.Entity.ERP_boardQ;
 import com.example.demo.Entity.ERP_user;
 import com.example.demo.Entity.ERP_userMailBox;
+import com.example.demo.Entity.HR_mem;
 import com.example.demo.Form.ERP_approvalForm;
 import com.example.demo.Form.ERP_boardAForm;
 import com.example.demo.Form.ERP_boardQForm;
 import com.example.demo.Form.ERP_sendMailForm;
 import com.example.demo.Service.ERP_UserService;
+import com.example.demo.Service.HR_memService;
 import com.example.demo.security.ERP_signUpForm;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,6 +45,7 @@ public class ERP_Controller {
 
 	@Autowired
 	private final ERP_UserService erp_UserService;
+	private final HR_memService memservice;
 	
 	@GetMapping("/signup")
 	public String signupForm(Model model) {
@@ -135,7 +138,8 @@ public class ERP_Controller {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/board/Qcreate")
-	public String questionCreate(ERP_boardQForm questionform) {
+	public String questionCreate(Model model, ERP_boardQForm questionform, Principal principal) {
+		model.addAttribute("principal",principal.getName());
 		return "board_Qform";
 	}
 	
@@ -146,8 +150,9 @@ public class ERP_Controller {
 		if(bindingResult.hasErrors()) {
 			return"board_Qform";
 		}
-		ERP_user user = this.erp_UserService.getUser(principal.getName());
-		this.erp_UserService.createQuestion(questionform.getSubject(), questionform.getContent(), user);
+		Optional<ERP_user> user = erp_UserService.getName(principal.getName());
+		HR_mem mem = memservice.getMem(user.get().getName());
+		this.erp_UserService.createQuestion(questionform.getSubject(), questionform.getContent(), mem);
 		
 		return "redirect:/user/board/Qlist";
 	}
@@ -155,12 +160,13 @@ public class ERP_Controller {
 	@GetMapping("/board/Qlist")
 	public String questionlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 		Page<ERP_boardQ> questionList = this.erp_UserService.QuestionGetList(page);
+		
 		model.addAttribute("questionlist", questionList);  
 		return "board_list";
 	}
 	
 	@GetMapping(value ="/board/Qdetail/{id}")
-	public String questiondetail(Model model, @PathVariable("id") Integer id) {
+	public String questiondetail(Model model, @PathVariable("id") Integer id, ERP_boardAForm answerform) {
 		ERP_boardQ question = this.erp_UserService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "board_detail";
@@ -172,14 +178,46 @@ public class ERP_Controller {
 			@Valid ERP_boardAForm answerform, BindingResult bindingResult,
 			Principal principal) {
 		ERP_boardQ question = this.erp_UserService.getQuestion(id);
-		ERP_user user = this.erp_UserService.getUser(principal.getName());
+		Optional<ERP_user> user = erp_UserService.getName(principal.getName());
+		HR_mem mem = memservice.getMem(user.get().getName());
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("question", question);
 			return "board_detail";
 		}
-		this.erp_UserService.createAnswer(question, answerform.getContent(), user);
+		this.erp_UserService.createAnswer(question, answerform.getContent(), mem);
 		return String.format("redirect:/user/board/Qdetail/%s", id);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/board/Qmodify/{id}")
+	public String questionModify(ERP_boardQForm questionform, 
+								@PathVariable("id") Integer id, Principal principal) {
+		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		questionform.setSubject(question.getSubject());
+		questionform.setContent(question.getContent());
+		return "board_Qform";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/board/Qmodify/{id}")
+	public String questionModify(@Valid ERP_boardQForm questionform, BindingResult bindingResult,
+								 @PathVariable("id") Integer id) {
+		if(bindingResult.hasErrors()) {
+			return "board_Qform";
+		}
+		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		this.erp_UserService.questionModify(question, questionform.getSubject(), questionform.getContent());
+		return String.format("redirect:/user/board/Qdetail/%s", id);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/board/Qdelete/{id}")
+	public String questionDelete(@PathVariable("id") Integer id) {
+		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		this.erp_UserService.questionDelete(question);
+		return "redirect:/user/board/Qlist";
+	}
+	
 	
 //	================  approval control ==============
 	

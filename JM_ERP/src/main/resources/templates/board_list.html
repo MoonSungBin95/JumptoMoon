@@ -35,7 +35,7 @@
 				            th:text="${#lists.size(question.answerList)}">
 				        </span>
 					</td>
-					<td><span th:if="${question.erp_user != null}" th:text="question.erp_user.name}"></span> </td>
+					<td><span th:if="${question.mem != null}" th:text="${question.mem.name}"></span> </td>
 		            <td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
 		        </tr>
 		    </tbody>

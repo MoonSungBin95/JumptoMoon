@@ -14,12 +14,10 @@
 	<nav th:replace="~{/navbar :: navbarFragment}"></nav>
 
 	<aside th:replace="~{/sidebar :: sidebarFragment}"></aside>
-	<div layout:fragment="content" class="container my-3 question-detail-main">
-		<div>
-			<a href="/user/board/Qlist"><</a>
-		</div>
+	
 		
 		<div class="container my-3">
+			<a href="/user/board/Qlist"><</a>
 			<!-- 질문 -->
 			<h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
 			<div class="card my-3">
@@ -28,9 +26,21 @@
 					</div>
 					<div class="d-flex justfy-content-end">
 						<div class="badge bg-light text-dark p-2 text-start">
+							<div class="mb-2">
+			                    <span th:if="${question.mem != null}" th:text="${question.mem.name}"></span>
+			                </div>
 							<div th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></div>
 						</div>
 					</div>
+					<div class="my-3">
+			            <a th:href="@{|/user/board/Qmodify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
+			                sec:authorize="isAuthenticated()"
+			                th:text="수정"></a>
+			            <a href="javascript:void(0);" th:data-uri="@{|/user/board/Qdelete/${question.id}|}" 
+			            	class="delete btn btn-sm btn-outline-secondary"
+			                sec:authorize="isAuthenticated()"
+			                th:text="삭제"></a>
+			        </div>
 				</div>
 			</div>
 			<!-- 답변의 갯수 표시 -->
@@ -42,6 +52,9 @@
 					<div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
 					<div class="d-flex justify-content-end">
 						<div class="badge bg-light text-dark p-2 text-start">
+							<div class="mb-2">
+			                    <span th:if="${answer.mem != null}" th:text="${answer.mem.name}"></span>
+			                </div>
 							<div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
 						</div>
 					</div>
@@ -49,19 +62,27 @@
 			</div>
 			<!-- 답변 반복 끝 -->
 			<!-- 답변 작성 -->
-			<form th:action="@{|/user/board/Acreate/${question.id}|}" method="post" class="my-3">
+			<form th:action="@{|/user/board/Acreate/${question.id}|}" th:object="${ERP_boardAForm}" method="post" class="my-3">
 				<textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
 				<textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
 				<input type="submit" value="답변등록" class="btn btn-primary my-2">
 			</form>
 		</div>
-	</div>
 	
 	<!-- Bootstrap JS 연결 -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- JQuery 연결 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+	<script type='text/javascript'>
+		const delete_elements = document.getElementsByClassName("delete");
+		Array.from(delete_elements).forEach(function(element) {
+		    element.addEventListener('click', function() {
+	        if(confirm("정말로 삭제하시겠습니까?")) {
+	            location.href = this.dataset.uri;
+		        };
+		    });
+		});
+	</script>
 </body>
 </html>

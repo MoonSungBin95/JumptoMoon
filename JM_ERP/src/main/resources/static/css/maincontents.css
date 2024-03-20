@@ -15,6 +15,7 @@
 	padding: 30px;
 	background-color: #FCFCFD;
 	width: fit-content;
+	white-space: nowrap;
 }
 
 .main-contents div h1 {
