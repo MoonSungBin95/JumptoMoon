@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +6,7 @@
     <title>채권, 채무 조회</title>
     
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <link rel="icon" href="/img/favicon-inquiry1.png" type="image/png" sizes="16x16"> <!-- 파비콘(favicon) 넣기-->
+    <link rel="icon" href="/img/favicon--inquiry1.png" type="image/png" sizes="16x16"> <!-- 파비콘(favicon) 넣기-->
     
 </head>
 <body>
@@ -99,7 +98,7 @@
 	                <!-- 페이징 프라그먼트 -->
 					<div th:replace="~{/ac/AC_paging::AC_pagingFragment(paging=${bonds})}"></div>
 					<!-- 버튼 프라그먼트 -->
-					<div th:replace="~{ac/AC_bond_debt_botton::bottonFragment}"></div>
+					<div th:replace="~{ac/AC_slip_botton::bondBottonFragment}"></div>
                 </div> <!-- 옵션 1일 때 리스트 -->
                 
                 <!-- 옵션 2일때 시작 -->
@@ -142,7 +141,7 @@
                    	<!-- 페이징 프라그먼트 -->
 					<div th:replace="~{/ac/AC_paging::AC_pagingFragment(paging=${debts})}"></div>
 					<!-- 버튼 프라그먼트 -->
-					<div th:replace="~{ac/AC_bond_debt_botton::bottonFragment}"></div>
+					<div th:replace="~{ac/AC_slip_botton::debtBottonFragment}"></div>
                 </div> <!-- 옵션 2일 때 리스트 -->
             </div> <!-- 테이블 컬럼 끝(1:4 비율) -->
         </div> <!-- 컨테이너 플루이드 정의 끝 -->

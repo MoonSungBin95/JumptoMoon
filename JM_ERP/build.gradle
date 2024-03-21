@@ -8,7 +8,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = '19'
 }
 
 configurations {
@@ -48,8 +48,6 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	// Spring Boot Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	
-	
 	implementation 'org.apache.poi:poi-ooxml:5.2.2'
 	
 
@@ -60,47 +58,7 @@ compileJava {
     targetCompatibility = '17'
 }
 
-
-def webappDir = "$projectDir/src/main/my-app"
-
- sourceSets {
- main {
- resources {
- srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
- }
- }
- }
-
- processResources {
- dependsOn "buildReact"
- }
-
- task buildReact(type: Exec) {
- dependsOn "installReact"
- workingDir "$webappDir"
- inputs.dir "$webappDir"
- group = BasePlugin.BUILD_GROUP
- if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
- commandLine "npm.cmd", "run-script", "build"
- } else {
- commandLine "npm", "run-script", "build"
- }
- }
-
- task installReact(type: Exec) {
- workingDir "$webappDir"
- inputs.dir "$webappDir"
- group = BasePlugin.BUILD_GROUP
- if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
- commandLine "npm.cmd", "audit", "fix"
- commandLine 'npm.cmd', 'install'
- } else {
- commandLine "npm", "audit", "fix"
- commandLine 'npm', 'install'
- }
- }
-
-tasks.named('test') {
-	useJUnitPlatform()
+tasks.withType(JavaExec) {
+    systemProperty 'hibernate.dialect', System.getProperty('hibernate.dialect', 'org.hibernate.dialect.MySQLDialect')
 }
-//ddd
+                 

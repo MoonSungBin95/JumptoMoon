@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.ERP_approval;
 import com.example.demo.Entity.ERP_boardQ;
+import com.example.demo.Entity.ERP_user;
 import com.example.demo.Entity.ERP_userMailBox;
 import com.example.demo.Form.ERP_approvalForm;
 import com.example.demo.Form.ERP_boardAForm;
@@ -129,17 +133,21 @@ public class ERP_Controller {
 	
 //	================  board control ==============
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/board/Qcreate")
 	public String questionCreate(ERP_boardQForm questionform) {
 		return "board_Qform";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/board/Qcreate")
-	public String questionCreate(@Valid ERP_boardQForm questionform, BindingResult bindingResult) {
+	public String questionCreate(@Valid ERP_boardQForm questionform, BindingResult bindingResult
+								, Principal principal) {
 		if(bindingResult.hasErrors()) {
 			return"board_Qform";
 		}
-		this.erp_UserService.createQuestion(questionform.getSubject(), questionform.getContent());
+		ERP_user user = this.erp_UserService.getUser(principal.getName());
+		this.erp_UserService.createQuestion(questionform.getSubject(), questionform.getContent(), user);
 		
 		return "redirect:/user/board/Qlist";
 	}
@@ -158,15 +166,18 @@ public class ERP_Controller {
 		return "board_detail";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/board/Acreate/{id}")
 	public String createAnswer(Model model, @PathVariable("id") Integer id,
-			@Valid ERP_boardAForm answerform, BindingResult bindingResult) {
+			@Valid ERP_boardAForm answerform, BindingResult bindingResult,
+			Principal principal) {
 		ERP_boardQ question = this.erp_UserService.getQuestion(id);
+		ERP_user user = this.erp_UserService.getUser(principal.getName());
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("question", question);
 			return "board_detail";
 		}
-		this.erp_UserService.createAnswer(question, answerform.getContent());
+		this.erp_UserService.createAnswer(question, answerform.getContent(), user);
 		return String.format("redirect:/user/board/Qdetail/%s", id);
 	}
 	
@@ -198,9 +209,16 @@ public class ERP_Controller {
 	public String approvalDetail(Model model, @PathVariable("id") Integer id) {
 		ERP_approval approval = this.erp_UserService.getApproval(id);
 		model.addAttribute("approval", approval);
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		model.addAttribute("authority", authentication.getAuthorities());
 		return "ERP_approvalDetail";
 	}
 	
+	
+
 }
 
+	
+	 
 

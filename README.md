@@ -1,39 +1,65 @@
-# JumptoMoon
-< 규칙 >
-1. 엔티티 칼럼명 적을 때 두 단어 이상이면 언더바(_)로 연결하기(JPA에서 대문자로 작성하면 알아서 언더바로 만들어줌)
-2. 변수명이 두 단어 이상이면 앞은 소문자, 뒤는 대문자로 적기 ( ex) businessNumber )
-3. 다른 부서 값을 변경할 일이 생기면 담당 인원과 먼저 조율하기
-4. main 에 push 할 시(오류수정 등) 카톡방에 알리기
-5. main 브랜치는 merge 용도로 사용
-6. 부서별 조회 권한부여 : 버튼 비활성화 (권한이 없습니다) 버튼은 보임
+<img src= "https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=JM%20ERP&desc=%20Jump%20to%20Moon%20Team%20ERP%20Project&descAlign=50&descAlignY=59&descSize=20.1&fontSize=80&section=header&reversal=true&textBg=false&animation=fadeIn&fontAlign=50&fontAlignY=45" />
 
 
-=====================================================
-<merge 한 후에 pull 하는 과정>
+# 💻 프로젝트 목표
+- 고객의 PainPoint를 해결하며 공통의 비즈니스 목표를 달성할 수 있는 솔루션의 필요성 대두
+- 다양한 분야의 기업이 단순 B2B서비스에서 **B2B2C**로 변화 ➡ **ERP 또한 CRM 추가 도입 필요**
+- CRM이 도입된 ERP 사용에 대한 중소기업의 부담 완화
+- SCM(공급망관리), HRM(인적자원관리), 재무관리 등 ERP 본연의 기능 유지
+- 소비자의 **구매 데이터 분석** 및 **향후 판매량 예측**
+- 시스템 표준화를 통한 데이터 일관성 유지
+- 코드의 재사용성 및 유지보수 효율성 확보
 
-1. git fetch origin : 원격브랜치 업데이트
-2. git checkout Development : 기존 작업하던 브랜치에서 Development 브랜치로 이동
-3. git pull : 머지했던 내용을 로컬로 내려받기
-	* 충돌 발생할 경우, 해당 파일에 직접 들어가 수정 -> 수정된 파일 commit -> git bash에서 현재 상태가 Merging일 경우 "git status" 입력해서 Merging 상태 해제
-4. ***pull완료된 것 확인한 후에*** 더이상 사용하지 않는 브랜치 삭제. 
-   로컬 브랜치 삭제할 경우 : git branch -d (브랜치 이름)
-   원격 브랜치 삭제할 경우 : git push origin --delete (브랜치 이름)
+# 📆 개발 기간
+2024.01 ~ 2024.03
 
-=====================================================
-<새로운 브랜치 만들기>
 
-1. git fetch origin : 원격 브랜치 목록 갱신 
-	* 만약 이미 삭제된 기존 브랜치때문에 오류 발생하는 경우 *
-		git branch --list -r 입력해서 원격 브랜치 목록 확인 후 이상 있으면
-		C:\Users\040\git\JumptoMoon\.git에서 config 파일 열어서
-		[remote "origin"] 부분을
-   		 url = https://github.com/MoonSungBin95/JumptoMoon.git
-    		fetch = +refs/heads/*:refs/remotes/origin/* 
-		으로 수정하면 모든 브랜치 검색 가능해짐
-2. git checkout Development : 현재 위치를 'Development' 브랜치로 전환
-3. git checkout -b (새로운 브랜치 이름) : 새 브랜치 만들고 새 브랜치로 이동하기
-	Ex) git checkout -b feature/nav/KYE
-4. git push origin (새로운 브랜치 이름) : 새 브랜치를 원격 저장소에 푸시
-5. git 웹페이지에 새 브랜치가 제대로 올라갔는지 확인!
-	* 변경사항 commit 후 처음 push할 경우, 만약 --set-upstream 으로 push하라고 뜨면 그냥 그렇게 하면 됨
-======================================================
+# 📚 프로젝트 설명
+- 기존 B2B 형태의 ERP 형식에서 벗어난 **B2B2C형태의 소비자중심 ERP**
+- 소비자 구매 데이터 분석 및 향후 판매량 예측 ➡ 다른 ERP와의 차별점 부여
+- 인사, 생산, 영업, 판매, 구매, 재고, 회계 등 다양한 비즈니스 영역에서 기업의 내부 프로세스를 관리 및 최적화
+- 부서별 접근권한 부여
+
+
+# 🛠 기술 스택 & 개발 환경
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">  
+
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+
+
+# 😀 팀 소개
+![image](https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/151369c2-4c46-4d1a-8914-4aba42f86e90)
+
+
+# ⚙ 주요 기능
+- 사내 커뮤니티 게시판
+- 각 부서별 CRUD
+- 부서별 접근권한, 관리자 모드
+
+
+# 📊 소비자의 구매데이터 분석 및 판매량 예측
+**1. 향후 6개월 판매량 예측**
+   ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/73859618-1ab5-4c87-9448-cebfc3d66aba)
+
+**2. 상품별 판매량 비교분석**
+   ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/8245d8df-ce73-409c-9a01-b63eeb94b128)
+   <img src="https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/5599af23-9662-4a3e-ba2f-7f4208991dfd" width="50%" height="50%">
+   
+**3. 회원별 구매 카테고리 분석**
+
+   <img src="https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/eedcb73c-6ccd-4d76-aeee-e0b16e0754a6" width="50%" height="50%">
+
+ 
+# 📋 아키텍처
+<img src="https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/94411d83-4caf-4f1a-97b5-3b3a4e0e45a6" width="50%" height="50%">
+
+
+# 📋 ERD
+<img src="https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/33c7a888-9538-4c0a-83f6-ce16b377c86d" width="50%" height="50%">
+
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=timeAuto&height=150&section=footer" /> 

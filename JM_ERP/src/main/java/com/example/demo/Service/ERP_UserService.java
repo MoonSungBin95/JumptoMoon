@@ -38,6 +38,20 @@ public class ERP_UserService {
 	private final ERP_boardARepository answerrepository;
 	private final ERP_approvalRepository approvalrepository;
 	
+	public Optional<ERP_user> getName(String userid) {
+		Optional<ERP_user> user = erp_userRepository.findByUserId(userid);
+		return user;
+	}
+	
+	public ERP_user getUser(String name) {
+        Optional<ERP_user> user = this.erp_userRepository.findByName(name);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new DataNotFoundException("user not found");
+        }
+    }
+	
 	public boolean createuser(String userId, String password, String name, String employeeId) throws Exception {
 
 		ERP_user user = new ERP_user();
@@ -74,8 +88,8 @@ public class ERP_UserService {
 			mail.setMediaFile(mediaFile);
 			mail.setSubject(subject);
 
-			Optional<ERP_user> user = erp_userRepository.findByuserId(sendUser);
-			Optional<ERP_user> user2 = erp_userRepository.findByuserId(reciveUser);
+			Optional<ERP_user> user = erp_userRepository.findByUserId(sendUser);
+			Optional<ERP_user> user2 = erp_userRepository.findByUserId(reciveUser);
 
 			if (user.isPresent()) {
 				ERP_user sendU = user.get();
@@ -120,6 +134,7 @@ public class ERP_UserService {
 		return erp_userMailBoxRepository.findById(num);
 
 	}
+	
 
 	public void checkmailstatus(Long num) {
 		Optional<ERP_userMailBox> a = erp_userMailBoxRepository.findById(num);
@@ -144,19 +159,21 @@ public class ERP_UserService {
 		}
 	}
 	
-	public void createAnswer(ERP_boardQ question, String content) {
+	public void createAnswer(ERP_boardQ question, String content, ERP_user erp_user) {
 		ERP_boardA answer = new ERP_boardA();
 		answer.setContent(content);
 		answer.setCreateDate(LocalDateTime.now());
 		answer.setQuestion(question);
+		answer.setErp_user(erp_user);
 		this.answerrepository.save(answer);
 	}	
 	
-	public void createQuestion(String subject, String content) {
+	public void createQuestion(String subject, String content, ERP_user erp_user) {
 		ERP_boardQ q = new ERP_boardQ();
 		q.setSubject(subject);
 		q.setContent(content);
 		q.setCreateDate(LocalDateTime.now());
+		q.setErp_user(erp_user);
 		this.questionrepository.save(q);
 	}
 	

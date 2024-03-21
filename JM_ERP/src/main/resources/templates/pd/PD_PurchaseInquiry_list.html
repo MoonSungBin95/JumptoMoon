@@ -28,10 +28,7 @@
 				<div class="input-group" style="display:flex; width:250px; float:right; :active{border :none}";>
 					<input type="text" id="serchpurchase" class="form-control bg-light border-hober small" th:value="${kw}">
 					<div class="input-group-append">
-						<button class="btn btn-primary" type="button" id="btn_search">
-							검색
-							
-						</button>
+						<button class="btn btn-primary" type="button" id="btn_search">검색</button>
 					</div>
 				</div>
 				<!-- End of input-group(검색창)-->
@@ -56,10 +53,7 @@
 							<td th:text="${inquiry.clientName}">Client Name</td>
 							<td th:text="${inquiry.itemName}">Item Name</td>
 							<td th:text="${inquiry.totalCount}">Total Amount</td>
-							<td>
-								<a th:text="${inquiry.acceptance}" th:href="@{/PC/purchase/ordersheet/create/{id}(id=${inquiry.num})}"
-								></a>
-							</td>
+							<td th:text="${inquiry.acceptance}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -71,12 +65,6 @@
 				<div th:replace="~{PD/PD_button::PD_rs-buttonFragment}"></div>
 			</div> <!-- End of row -->
 		</div> <!-- End of container-fluid-->
-
-
-
-
-
-
 
 
 	<!-- Bootstrap JS 연결 -->
