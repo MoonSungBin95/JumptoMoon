@@ -21,7 +21,6 @@ public class SecurityConfig {
 
 
       http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-    		  .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
     		   .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
     		  
    		    .requestMatchers(new AntPathRequestMatcher("/ERP_login.html")).permitAll()
@@ -46,7 +45,7 @@ public class SecurityConfig {
 
             .headers((headers) -> headers.addHeaderWriter(
                   new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-            .formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/"))
+            .formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("http://54.180.176.202:8080"))
 
             .logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                   .logoutSuccessUrl("/").invalidateHttpSession(true));

@@ -19,7 +19,7 @@
 
 <body>
 	<!-- 네비게이션바 프라그먼트-->
-	<nav th:replace="~{/navbar :: navbarFragment}"></nav>
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<!-- 사이드바 -->
 	<aside th:replace="~{sidebar :: sidebarFragment}"></aside>
 	
@@ -55,7 +55,7 @@
 		        <tr class="text-center" th:each="question, loop : ${questionlist}">
 					<td th:text="${loop.count}"></td>
 					<td class="text-start">
-						<a th:href="@{|/user/board/Qdetail/${question.id}|}" 
+						<a th:href="@{|user/board/Qdetail/${question.id}|}" 
 						th:text="${question.subject}"></a>
 						<span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"
 				            th:text="${#lists.size(question.answerList)}">

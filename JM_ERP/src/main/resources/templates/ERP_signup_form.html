@@ -10,10 +10,10 @@
 
 <body>
 	<!-- 네비게이션바 프라그먼트-->
-	<nav th:replace="~{/navbar :: signup--navbarFragment}"></nav>
+	<nav th:replace="~{navbar :: signup--navbarFragment}"></nav>
 	<div class="signup-box">
 	<canvas class = "canvas-signup"></canvas>
-	<form th:action="@{/user/signup}" th:object="${signupForm}" method="post" class="signupform">
+	<form th:action="@{signup}" th:object="${signupForm}" method="post" class="signupform">
 		<div class = "textbox">
 			<div class="theme1">
 				<span data-target = "typing--text" class = "sentence--gray">
