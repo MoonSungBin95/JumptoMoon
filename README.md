@@ -45,8 +45,10 @@
 ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/66113141/e53ca212-8daf-4ab8-b2ae-c9bdca09e209)
 
 - 부서별 접근권한, 관리자 모드
+  
 ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/66113141/078e3fee-e692-4165-8c57-ea1da050aab0)
 ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/66113141/9ea145f7-4722-4bb8-adb7-248d3bfeec4c)
+
 # 📊 소비자의 구매데이터 분석 및 판매량 예측
 **1. 향후 6개월 판매량 예측**
    ![image](https://github.com/MoonSungBin95/JumptoMoon/assets/151815152/73859618-1ab5-4c87-9448-cebfc3d66aba)
