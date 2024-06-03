@@ -37,6 +37,9 @@
 
 # ⚙ 주요 기능
 - 사내 커뮤니티 게시판
+![image](https://github.com/MoonSungBin95/JumptoMoon/assets/66113141/6a3b2f53-0048-4ce9-bd5d-c1795f5a0f3d)
+![image](https://github.com/MoonSungBin95/JumptoMoon/assets/66113141/dabe84c5-436c-482e-9f81-adb20cc5287c)
+  
 - 각 부서별 CRUD
 - 부서별 접근권한, 관리자 모드
 
